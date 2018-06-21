@@ -23,6 +23,8 @@ export default class HomeScreen extends React.Component {
       orderNo: 2
     },{
       orderNo: 3
+    },{
+      orderNo: 3
     }]
   };
 
