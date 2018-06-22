@@ -18,7 +18,7 @@ class OrderCard extends Component {
     return (
       <View style={{ flex: 1 }}>
         <View style={{ margin: 5, borderColor: '#ddd', backgroundColor: '#fff' }}>
-          <Text>Order#: {item.orderNo}</Text>
+          <Text>Order#: {item.orderId}</Text>
         </View>
       </View>
     )

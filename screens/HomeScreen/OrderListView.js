@@ -1,12 +1,11 @@
 import React, { Component } from 'react'
 import {
   ScrollView,
-  Text,
-  View,
   FlatList,
 } from 'react-native'
 import Styles from './Styles'
 import { Context } from './OrderContext'
+import OrderCard from './OrderCard'
 
 class OrderListView extends Component {
   state = { }
@@ -21,13 +20,7 @@ class OrderListView extends Component {
                 initialNumToRender={6}
                 data={context.orders}
                 numColumns={3}
-                renderItem={({ item }) => (
-                  <View style={{ flex: 1 }}>
-                    <View style={{ margin: 5, borderColor: '#ddd', backgroundColor: '#fff' }}>
-                      <Text>Order#: {item.orderNo}</Text>
-                    </View>
-                  </View>
-                )}
+                renderItem={({ item }) => (<OrderCard item={item} />)}
                 keyExtractor={(item, index) => index}
               />
             )
