@@ -29,6 +29,18 @@ class OrderCard extends Component {
     }
   }
 
+  renderOrderItems = items => (
+    items.map(item => (
+      <View
+        key={item.product.productId}
+        style={{ flexDirection: 'row', margin: 5 }}
+      >
+        <Text style={{ flex: 0.8, fontWeight: '800' }}>{item.product.name}</Text>
+        <Text style={{ flex: 0.2, textAlign: 'right', fontWeight: '800' }}>{item.quantity}</Text>
+      </View>
+    ))
+  )
+
   render() {
     const { item } = this.props
     const { status } = this.state
@@ -73,6 +85,8 @@ class OrderCard extends Component {
               </Text>
             </View>
           </View>
+
+          { this.renderOrderItems(item.orderItems) }
         </View>
       </View>
     )
