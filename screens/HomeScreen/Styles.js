@@ -89,4 +89,47 @@ const styles = StyleSheet.create({
   },
 })
 
+const OrderButton = backgroundColor => ({
+  width: 100,
+  backgroundColor: backgroundColor || 'blue',
+  borderRadius: 5,
+  marginBottom: 5,
+})
+
+const OrderButtonText = color => ({
+  alignSelf: 'center',
+  color: color || '#fff',
+  fontWeight: '600',
+  padding: 10,
+})
+
+const getColor = (status) => {
+  switch (status) {
+    case 'start':
+      return {
+        backgroundColor: 'rgb(255,255,255)',
+        buttonBackgroundColor: 'rgb(34,202,228)',
+        headerColor: 'grey',
+      }
+    case 'done':
+      return {
+        backgroundColor: 'rgb(233,251,255)',
+        buttonBackgroundColor: 'teal',
+        headerColor: 'rgb(34,202,228)',
+      }
+    default:
+      return {
+        backgroundColor: 'rgb(251,240,255)',
+        buttonBackgroundColor: 'red',
+        headerColor: 'red',
+      }
+  }
+}
+
 export default styles
+export {
+  OrderButton,
+  OrderButtonText,
+  getColor,
+}
+

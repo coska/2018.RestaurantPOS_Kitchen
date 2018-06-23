@@ -5,6 +5,9 @@ import {
   View,
 } from 'react-native'
 
+import Button from './OrderButton'
+import { getColor } from './Styles'
+
 class OrderCard extends Component {
   static propTypes = {
     item: PropTypes.object // eslint-disable-line
@@ -14,20 +17,19 @@ class OrderCard extends Component {
     status: 'start',
   }
 
+  onPressHandler = () => {
+    const { status } = this.state
+
+    if (status === 'start') {
+      return this.setState({ status: 'done' })
+    }
+
+    return this.setState({ status: 'call' })
+  }
+
   getCurrentTime = () => this.props.item.createdDateTime.slice(11, 16)
 
   getOrderTime = () => '00:00'
-
-  getHeaderColor = (status) => {
-    switch (status) {
-      case 'start':
-        return 'grey'
-      case 'done':
-        return 'teal'
-      default:
-        return 'red'
-    }
-  }
 
   renderOrderItems = items => (
     items.map(item => (
@@ -44,18 +46,19 @@ class OrderCard extends Component {
   render() {
     const { item } = this.props
     const { status } = this.state
+    const colors = getColor(status)
 
     return (
       <View style={{ flex: 1 }}>
         <View style={{
           margin: 5,
           borderColor: '#ddd',
-          backgroundColor: '#fff',
+          backgroundColor: colors.backgroundColor,
           }}
         >
           <View
             style={{
-              backgroundColor: this.getHeaderColor(status),
+              backgroundColor: colors.headerColor,
               flex: 1,
               height: 5,
             }}
@@ -64,7 +67,7 @@ class OrderCard extends Component {
           <View style={{ borderBottomColor: 'grey', borderBottomWidth: 1 }}>
             <View style={{ flexDirection: 'row', marginTop: 5, marginLeft: 5 }}>
               <Text style={{ flex: 0.8, fontWeight: '800' }}>
-                TABLE({item.table.tableId}) / ORDER({item.orderId})
+                TABLE ({item.table.tableId}) / ORDER ({item.orderId})
               </Text>
               <Text style={{
                 flex: 0.2,
@@ -87,6 +90,13 @@ class OrderCard extends Component {
           </View>
 
           { this.renderOrderItems(item.orderItems) }
+
+          <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+            <Button onPress={this.onPressHandler} backgroundColor={colors.buttonBackgroundColor}>
+              { status.toUpperCase() }
+            </Button>
+          </View>
+
         </View>
       </View>
     )
