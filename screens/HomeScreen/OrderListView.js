@@ -15,12 +15,12 @@ class OrderListView extends Component {
       <ScrollView style={Styles.container}>
         <Context.Consumer>
           {
-            ({ orders }) => (
+            ({ orders, setStatus }) => (
               <FlatList
                 initialNumToRender={6}
                 data={orders}
                 numColumns={3}
-                renderItem={({ item }) => (<OrderCard item={item} />)}
+                renderItem={({ item }) => (<OrderCard item={item} setStatus={setStatus} />)}
                 keyExtractor={(item, index) => index}
               />
             )

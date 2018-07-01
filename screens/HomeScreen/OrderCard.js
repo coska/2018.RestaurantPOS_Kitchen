@@ -10,21 +10,19 @@ import { getColor } from './Styles'
 
 class OrderCard extends Component {
   static propTypes = {
-    item: PropTypes.object // eslint-disable-line
-  }
-
-  state = {
-    status: 'start',
+    item: PropTypes.object, // eslint-disable-line
+    setStatus: PropTypes.func.isRequired,
   }
 
   onPressHandler = () => {
-    const { status } = this.state
+    const { status, orderId } = this.props.item
+    const { setStatus } = this.props
 
     if (status === 'start') {
-      return this.setState({ status: 'done' })
+      return setStatus(orderId, 'done')
     }
 
-    return this.setState({ status: 'call' })
+    return setStatus(orderId, 'call')
   }
 
   getCurrentTime = () => this.props.item.createdDateTime.slice(11, 16)
@@ -45,7 +43,7 @@ class OrderCard extends Component {
 
   render() {
     const { item } = this.props
-    const { status } = this.state
+    const { status } = item
     const colors = getColor(status)
 
     return (
