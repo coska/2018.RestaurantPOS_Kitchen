@@ -1,5 +1,4 @@
-import React, { Component, createContext } from 'react'
-import produce from 'immer'
+import { createContext } from 'react'
 
 const Context = createContext()
 
@@ -37,38 +36,6 @@ const createOrder = index => (
   }
 )
 
-class OrderProvider extends Component {
-  /* eslint-disable */
-  state = {
-    orders: [],
-    setStatus: (id, status) => this.setState(produce(draft => {
-      const order = draft.orders[draft.orders.findIndex(order => order.orderId === id)]
-      order.status = status
-    }))
-  }
-  /* eslint-enable */
+export default Context
 
-  componentDidMount() {
-    // fetch('https://virtserver.swaggerhub.com/coska/RestaurantPosV1/1.0.0/orders', { headers: { accept: 'application/json' } })
-    //   .then(res => res.json())
-    //   .then(orders => console.log(orders))
-
-    const orders = [...Array(30).keys()].map(x => createOrder(x))
-    this.setState({orders}) // eslint-disable-line
-  }
-
-  render() {
-    return (
-      <Context.Provider value={this.state}>
-        {
-          this.props.children // eslint-disable-line
-        }
-      </Context.Provider>
-    )
-  }
-}
-
-export {
-  OrderProvider,
-  Context,
-}
+export { createOrder }

@@ -4,7 +4,7 @@ import {
   FlatList,
 } from 'react-native'
 import Styles from './Styles'
-import { Context } from './OrderContext'
+import Context from './OrderContext'
 import OrderCard from './OrderCard'
 
 class OrderListView extends Component {
