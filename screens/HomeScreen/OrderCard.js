@@ -18,7 +18,7 @@ class OrderCard extends Component {
     const { status, orderId } = this.props.item
     const { setStatus } = this.props
 
-    if (status === 'start') {
+    if (status === 'new') {
       return setStatus(orderId, 'done')
     }
 
@@ -28,6 +28,16 @@ class OrderCard extends Component {
   getCurrentTime = () => this.props.item.createdDateTime.slice(11, 16)
 
   getOrderTime = () => '00:00'
+
+  getButtonText = () => {
+    const { status } = this.props.item
+
+    if (status === 'new') {
+      return 'START'
+    }
+
+    return status.toUpperCase()
+  }
 
   renderOrderItems = items => (
     items.map(item => (
@@ -91,7 +101,7 @@ class OrderCard extends Component {
 
           <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
             <Button onPress={this.onPressHandler} backgroundColor={colors.buttonBackgroundColor}>
-              { status.toUpperCase() }
+              { this.getButtonText() }
             </Button>
           </View>
 
