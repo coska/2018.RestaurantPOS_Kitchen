@@ -105,7 +105,7 @@ const OrderButtonText = color => ({
 
 const getColor = (status) => {
   switch (status) {
-    case 'start':
+    case 'new':
       return {
         backgroundColor: 'rgb(255,255,255)',
         buttonBackgroundColor: 'rgb(34,202,228)',
