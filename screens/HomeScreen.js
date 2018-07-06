@@ -1,41 +1,32 @@
 import React from 'react'
-import produce from 'immer'
 import { View } from 'react-native'
+import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
 import Styles from './HomeScreen/Styles'
 import NavigationBar from './HomeScreen/NavigationBar'
 import OrderListView from './HomeScreen/OrderListView'
-import Context, { createOrder } from './HomeScreen/OrderContext'
+import { createTestData } from '../actions'
 
 class HomeScreen extends React.Component {
   static navigationOptions = {
     header: null,
   }
 
-  /* eslint-disable */
-  state = {
-    orders: [],
-    setStatus: (id, status) => this.setState(produce(draft => {
-      const order = draft.orders[draft.orders.findIndex(order => order.orderId === id)]
-      order.status = status
-    })),
-  }
-  /* eslint-enable */
-
   componentDidMount() {
-    const orders = [...Array(30).keys()].map(x => createOrder(x))
-    this.setState({orders}) // eslint-disable-line
+    this.props.createTestData() // eslint-disable-line
   }
 
   render() {
     return (
-      <Context.Provider value={this.state}>
-        <View style={Styles.container}>
-          <NavigationBar />
-          <OrderListView />
-        </View>
-      </Context.Provider>
+      <View style={Styles.container}>
+        <NavigationBar />
+        <OrderListView />
+      </View>
     )
   }
 }
 
-export default HomeScreen
+export default connect(
+  null,
+  dispatch => bindActionCreators({ createTestData }, dispatch),
+)(HomeScreen)

@@ -1,6 +1,4 @@
-import { createContext } from 'react'
-
-const Context = createContext()
+import * as AT from '../ActionTypes'
 
 const createOrder = index => (
   {
@@ -36,6 +34,18 @@ const createOrder = index => (
   }
 )
 
-export default Context
+const createTestData = () => ({
+  type: AT.SET_ORDERS,
+  orders: [...Array(30).keys()].map(x => createOrder(x)),
+})
 
-export { createOrder }
+const setOrderStatus = (id, status) => ({
+  type: AT.SET_ORDER_STATUS,
+  id,
+  status,
+})
+
+export {
+  createTestData,
+  setOrderStatus,
+}

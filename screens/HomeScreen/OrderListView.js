@@ -1,34 +1,27 @@
-import React, { Component } from 'react'
+import React from 'react'
+import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
 import {
   ScrollView,
   FlatList,
 } from 'react-native'
 import Styles from './Styles'
-import Context from './OrderContext'
 import OrderCard from './OrderCard'
+import { setOrderStatus } from '../../actions'
 
-class OrderListView extends Component {
-  state = { }
+const OrderListView = ({ orders, setOrderStatus }) => ( // eslint-disable-line
+  <ScrollView style={Styles.container}>
+    <FlatList
+      initialNumToRender={6}
+      data={orders}
+      numColumns={3}
+      renderItem={({ item }) => (<OrderCard item={item} setStatus={setOrderStatus} />)}
+      keyExtractor={(item, index) => index}
+    />
+  </ScrollView>
+)
 
-  render() {
-    return (
-      <ScrollView style={Styles.container}>
-        <Context.Consumer>
-          {
-            ({ orders, setStatus }) => (
-              <FlatList
-                initialNumToRender={6}
-                data={orders}
-                numColumns={3}
-                renderItem={({ item }) => (<OrderCard item={item} setStatus={setStatus} />)}
-                keyExtractor={(item, index) => index}
-              />
-            )
-          }
-        </Context.Consumer>
-      </ScrollView>
-    )
-  }
-}
-
-export default OrderListView
+export default connect(
+  state => ({ orders: state.orders }),
+  dispatch => bindActionCreators({ setOrderStatus }, dispatch),
+)(OrderListView)
