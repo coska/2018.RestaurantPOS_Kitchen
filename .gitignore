@@ -28,3 +28,4 @@ node_modules/
 # Roy custom
 2018.RestaurantPOS_Kitchen.iml
 *.swp
+.vscode
