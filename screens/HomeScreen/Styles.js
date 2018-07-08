@@ -3,6 +3,7 @@ import {
   StyleSheet,
 } from 'react-native'
 
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -89,6 +90,71 @@ const styles = StyleSheet.create({
   },
 })
 
+/******************************************************/
+/* Kitchen Nav                                        */
+
+const KIT_DEBUG = 0;
+
+const KitNavButtonSty = (backgroundColor='white') => ({
+  backgroundColor: backgroundColor,
+  borderRadius: 0,
+  borderWidth: KIT_DEBUG || 0,
+  /**margin-bottom: 10, **/
+  margin: 1,
+  width:125,
+})
+
+const KitNavPrevNextSty = () => ({
+  borderWidth: 1,
+  margin: 1,
+  width:80,
+  borderColor: '#FFF',
+})
+
+const KitNavPrevNextTextSty = () => ({
+  alignSelf: 'center',
+  color: '#FFF',
+  fontWeight: '500',
+  fontSize: 13,
+  padding: 1,
+  borderWidth: KIT_DEBUG || 0,
+  margin: 5,
+})
+
+
+const KitNavTextSty = () => ({
+  alignSelf: 'center',
+  color: '#000',
+  fontWeight: '500',
+  fontSize: 13,
+  padding: 1,
+  borderWidth: KIT_DEBUG || 0,
+  margin: 5,
+})
+
+const KitNavClockSty = () => ({
+  color: '#FFF',
+  fontSize: 13,
+  alignItems: 'center',
+  alignSelf: 'center',
+  fontWeight: '500',
+  marginRight: 10,
+})
+
+const KitNavLogoSty = () => ({
+  fontSize: 20,
+  color: '#FFF',
+  flex:1,
+  alignItems: 'center',
+  flexDirection: 'row-reverse',
+  fontWeight: '500',
+  borderWidth: KIT_DEBUG || 0,
+  margin:0,
+})
+
+/* End of  Kitchen Nav                                */
+/******************************************************/
+
 const OrderButton = backgroundColor => ({
   width: 100,
   backgroundColor: backgroundColor || 'blue',
@@ -128,6 +194,14 @@ const getColor = (status) => {
 
 export default styles
 export {
+
+  KitNavButtonSty,
+  KitNavTextSty,
+  KitNavPrevNextSty,
+  KitNavPrevNextTextSty,
+  KitNavClockSty,
+  KitNavLogoSty,
+
   OrderButton,
   OrderButtonText,
   getColor,

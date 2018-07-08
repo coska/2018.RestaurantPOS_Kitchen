@@ -24,3 +24,8 @@ hs_err_pid*
 node_modules/
 .expo/**/*
 .idea/
+
+# Roy custom
+2018.RestaurantPOS_Kitchen.iml
+*.swp
+.vscode
