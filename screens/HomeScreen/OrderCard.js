@@ -14,16 +14,6 @@ class OrderCard extends Component {
     setStatus: PropTypes.func.isRequired,
   }
 
-  state = {
-    currentTime: '',
-  }
-
-  componentDidMount = () => {
-    this.timerId = setInterval(() => this.setCurrentTime(), 60000)
-  }
-
-  componentWillUnmount = () => clearInterval(this.timerId)
-
   onPressHandler = () => {
     const { status, orderId } = this.props.item
     const { setStatus } = this.props
@@ -38,7 +28,7 @@ class OrderCard extends Component {
   getCreatedTime = () => this.props.item.createdDateTime.slice(11, 16)
 
   getOrderTime = () => {
-    const { currentTime } = this.state
+    const { currentTime } = this.props
     const createdTimeSeconds = this.getSeconds(this.getCreatedTime())
     const currentTimeSeconds = this.getSeconds(currentTime)
     const diff = currentTimeSeconds - createdTimeSeconds
@@ -65,12 +55,6 @@ class OrderCard extends Component {
     const seconds = ((+hm[0]) * 60 * 60) + ((+hm[1]) * 60)
 
     return seconds
-  }
-
-  setCurrentTime = () => {
-    const currentTime = new Date().toJSON().slice(11, 16)
-
-    this.setState({ currentTime }, () => this.getOrderTime())
   }
 
   renderOrderItems = items => (
@@ -123,7 +107,7 @@ class OrderCard extends Component {
             </View>
             <View style={{ flexDirection: 'row', marginLeft: 5 }}>
               <Text style={{ flex: 0.8 }}>
-                {this.getCreatedTime()} ({this.getOrderTime()})
+                {this.getCreatedTime()} (+{this.getOrderTime()})
               </Text>
               <Text style={{ flex: 0.2, textAlign: 'right' }}>
                 Total: {item.orderItems.length}
