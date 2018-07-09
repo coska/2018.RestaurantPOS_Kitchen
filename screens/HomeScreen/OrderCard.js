@@ -25,9 +25,20 @@ class OrderCard extends Component {
     return setStatus(orderId, 'call')
   }
 
-  getCurrentTime = () => this.props.item.createdDateTime.slice(11, 16)
+  getCreatedTime = () => this.props.item.createdDateTime.slice(11, 16)
 
-  getOrderTime = () => '00:00'
+  getOrderTime = () => {
+    const { currentTime } = this.props
+    const createdTimeSeconds = this.getSeconds(this.getCreatedTime())
+    const currentTimeSeconds = this.getSeconds(currentTime)
+    const diff = currentTimeSeconds - createdTimeSeconds
+    const hours = Math.floor(diff / 3600) < 10 ? `0${Math.floor(diff / 3600)}` : Math.floor(diff / 3600)
+    const minutes = Math.floor((diff % 3600) / 60) < 10 ? `0${Math.floor((diff % 3600) / 60)}` : Math.floor((diff % 3600) / 60)
+
+    if (!diff) return '00:00'
+
+    return `${hours}:${minutes}`
+  }
 
   getButtonText = () => {
     const { status } = this.props.item
@@ -37,6 +48,13 @@ class OrderCard extends Component {
     }
 
     return status.toUpperCase()
+  }
+
+  getSeconds = (str) => {
+    const hm = str.split(':')
+    const seconds = ((+hm[0]) * 60 * 60) + ((+hm[1]) * 60)
+
+    return seconds
   }
 
   renderOrderItems = items => (
@@ -89,7 +107,7 @@ class OrderCard extends Component {
             </View>
             <View style={{ flexDirection: 'row', marginLeft: 5 }}>
               <Text style={{ flex: 0.8 }}>
-                {this.getCurrentTime()} ({this.getOrderTime()})
+                {this.getCreatedTime()} (+{this.getOrderTime()})
               </Text>
               <Text style={{ flex: 0.2, textAlign: 'right' }}>
                 Total: {item.orderItems.length}
