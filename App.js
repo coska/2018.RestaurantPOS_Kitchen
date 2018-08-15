@@ -19,6 +19,34 @@ const styles = StyleSheet.create({
   },
 })
 
+async function register() {
+  console.log('Registering...W');
+  const { status } = await Expo.Permissions.askAsync (
+    Expo.Permissions.NOTIFICATIONS
+  );
+  console.log(' Permitions: ' + status);
+
+  if(status !== 'granted') {
+    alert("You need to enable permission in setting");
+    return;
+  }
+
+  const pushToken = await Expo.Notifications.getExpoPushTokenAsync();  
+  console.log(' Token: ' + pushToken);
+
+  return fetch('http://192.168.0.17:8080/users/push-token', {
+    method: 'POST',
+    headers: {
+      Accept: 'application/json',
+              'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      token:  pushToken,
+      userId: 'thomas'
+    } ),
+  });
+}
+
 export default class App extends React.Component {
   state = {
     isLoadingComplete: false,
@@ -36,7 +64,7 @@ export default class App extends React.Component {
         // We include SpaceMono because we use it in HomeScreen.js. Feel free
         // to remove this if you are not using it in your app
         'space-mono': require('./assets/fonts/SpaceMono-Regular.ttf'),
-      }),
+      })
     ])
   };
 
@@ -49,6 +77,19 @@ export default class App extends React.Component {
   _handleFinishLoading = () => {
     this.setState({ isLoadingComplete: true });
   };
+
+  componentWillMount() {
+    register();
+    this.listener = Expo.Notifications.addListener(this.listen);
+  }
+
+  componentWillUnMount() {
+      this.listener && Expo.Notifications.removeListener(this.listen)
+  }
+
+  listen = ({origin, data}) => {
+    console.log(origin, data);
+  }
 
   render() {
     if (!this.state.isLoadingComplete && !this.props.skipLoadingScreen) {
