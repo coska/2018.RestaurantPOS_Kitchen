@@ -1,4 +1,5 @@
 import * as AT from '../ActionTypes'
+import * as _ from 'lodash'
 
 const createOrder = index => (
   {
@@ -34,10 +35,12 @@ const createOrder = index => (
   }
 )
 
-const createTestData = () => ({
-  type: AT.SET_ORDERS,
-  orders: [...Array(30).keys()].map(x => createOrder(x)),
-})
+const createTestData = () => {
+  return ({
+    type: AT.SET_ORDERS,
+    orders: _.keys(new Array(30)).map(x => createOrder(x))
+  })
+}
 
 const setOrderStatus = (id, status) => ({
   type: AT.SET_ORDER_STATUS,
